@@ -1,11 +1,11 @@
 Summary:          H.265/HEVC encoder
 Name:             x265
 Version:          3.4
-Release:          1
+Release:          2
 URL:              http://x265.org/
 License:          GPLv2
 
-Source0:          https://bitbucket.org/multicoreware/%{name}/downloads/%{name}_%{version}.tar.gz
+Source0:          https://bitbucket.org/multicoreware/%{name}_git/get/%{version}.tar.gz
 
 BuildRequires:    rpm-build cmake make gcc gcc-c++ gdb
 
@@ -112,5 +112,8 @@ rm %{buildroot}%{_libdir}/libx265.a
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Mon Sep 14 2020 Xiyuan Wang <wangxiyuan1007@gmail.com> - 3.4-2
+- Update Source0 in spec
+
 * Wed Jun 03 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.4-1
 - Package init
