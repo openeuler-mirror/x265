@@ -1,13 +1,13 @@
 Summary:          H.265/HEVC encoder
 Name:             x265
-Version:          3.4
-Release:          2
+Version:          3.5
+Release:          1
 URL:              http://x265.org/
 License:          GPLv2
 
 Source0:          https://bitbucket.org/multicoreware/%{name}_git/get/%{version}.tar.gz
 
-BuildRequires:    rpm-build cmake make gcc gcc-c++ gdb
+BuildRequires:    rpm-build cmake make gcc gcc-c++ gdb git
 
 %ifarch x86_64
 BuildRequires:    nasm >= 2.13
@@ -102,7 +102,7 @@ rm %{buildroot}%{_libdir}/libx265.a
 
 %files
 %{_bindir}/x265
-%{_libdir}/libx265.so.192
+%{_libdir}/libx265.so.199
 %license COPYING
 
 %files devel
@@ -112,6 +112,9 @@ rm %{buildroot}%{_libdir}/libx265.a
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Thu May 26 2022 wulei <wulei80@h-partners.com> - 3.5-1
+- Update package
+
 * Mon Sep 14 2020 Xiyuan Wang <wangxiyuan1007@gmail.com> - 3.4-2
 - Update Source0 in spec
 
