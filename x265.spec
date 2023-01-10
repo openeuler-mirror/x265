@@ -1,7 +1,7 @@
 Summary:          H.265/HEVC encoder
 Name:             x265
 Version:          3.4
-Release:          2
+Release:          3
 URL:              http://x265.org/
 License:          GPLv2
 
@@ -9,7 +9,7 @@ Source0:          https://bitbucket.org/multicoreware/%{name}_git/get/%{version}
 
 BuildRequires:    rpm-build cmake make gcc gcc-c++ gdb
 
-%ifarch x86_64
+%ifarch x86_64 loongarch64
 BuildRequires:    nasm >= 2.13
 %endif
 
@@ -90,6 +90,37 @@ x265 develop library.
  source
 %endif
 
+%ifarch loongarch64
+%cmake -G "Unix Makefiles" \
+ -DBIN_INSTALL_DIR:STRING="bin" \
+ -DCHECKED_BUILD:BOOL=OFF \
+ -DCMAKE_BUILD_TYPE:STRING="Release" \
+ -DCMAKE_INSTALL_PREFIX:PATH="/usr" \
+ -DDETAILED_CU_STATS:BOOL=OFF \
+ -DENABLE_AGGRESSIVE_CHECKS:BOOL=OFF \
+ -DENABLE_ASSEMBLY:BOOL=OFF \
+ -DENABLE_CLI:BOOL=ON \
+ -DENABLE_HDR10_PLUS:BOOL=OFF \
+ -DENABLE_LIBNUMA:BOOL=ON \
+ -DENABLE_LIBVMAF:BOOL=OFF \
+ -DENABLE_PIC:BOOL=ON \
+ -DENABLE_PPA:BOOL=OFF \
+ -DENABLE_SHARED:BOOL=ON \
+ -DENABLE_SVT_HEVC:BOOL=OFF \
+ -DENABLE_TESTS:BOOL=OFF \
+ -DENABLE_VTUNE:BOOL=OFF \
+ -DFSANITIZE="" \
+ -DLIBDL:FILEPATH="/usr/lib64/libdl.so" \
+ -DLIB_INSTALL_DIR:STRING="lib64" \
+ -DNASM_EXECUTABLE:FILEPATH="/usr/bin/nasm" \
+ -DNO_ATOMICS:BOOL=OFF \
+ -DNUMA_ROOT_DIR:PATH="NUMA_ROOT_DIR-NOTFOUND" \
+ -DSTATIC_LINK_CRT:BOOL=OFF \
+ -DVMAF:FILEPATH="VMAF-NOTFOUND" \
+ -DWARNINGS_AS_ERRORS:BOOL=OFF \
+ source
+%endif
+
 make %{?_smp_mflags}
 
 %install
@@ -112,6 +143,9 @@ rm %{buildroot}%{_libdir}/libx265.a
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Fri Jan  6 2023 huajingyun <huajingyun@loongson.cn> - 3.4-3
+- Add support for loongarch64
+
 * Mon Sep 14 2020 Xiyuan Wang <wangxiyuan1007@gmail.com> - 3.4-2
 - Update Source0 in spec
 
