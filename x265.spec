@@ -1,7 +1,7 @@
 Summary:          H.265/HEVC encoder
 Name:             x265
 Version:          3.5
-Release:          1
+Release:          2
 URL:              http://x265.org/
 License:          GPLv2
 
@@ -90,6 +90,37 @@ x265 develop library.
  source
 %endif
 
+%ifarch riscv64
+%cmake -G "Unix Makefiles" \
+ -DBIN_INSTALL_DIR:STRING="bin" \
+ -DCHECKED_BUILD:BOOL=OFF \
+ -DCMAKE_BUILD_TYPE:STRING="Release" \
+ -DCMAKE_INSTALL_PREFIX:PATH="/usr" \
+ -DDETAILED_CU_STATS:BOOL=OFF \
+ -DENABLE_AGGRESSIVE_CHECKS:BOOL=OFF \
+ -DENABLE_ASSEMBLY:BOOL=OFF \
+ -DENABLE_CLI:BOOL=ON \
+ -DENABLE_HDR10_PLUS:BOOL=OFF \
+ -DENABLE_LIBNUMA:BOOL=ON \
+ -DENABLE_LIBVMAF:BOOL=OFF \
+ -DENABLE_PIC:BOOL=ON \
+ -DENABLE_PPA:BOOL=OFF \
+ -DENABLE_SHARED:BOOL=ON \
+ -DENABLE_SVT_HEVC:BOOL=OFF \
+ -DENABLE_TESTS:BOOL=OFF \
+ -DENABLE_VTUNE:BOOL=OFF \
+ -DFSANITIZE="" \
+ -DLIBDL:FILEPATH="/usr/lib64/libdl.so" \
+ -DLIB_INSTALL_DIR:STRING="lib64" \
+ -DNASM_EXECUTABLE:FILEPATH="/usr/bin/nasm" \
+ -DNO_ATOMICS:BOOL=OFF \
+ -DNUMA_ROOT_DIR:PATH="NUMA_ROOT_DIR-NOTFOUND" \
+ -DSTATIC_LINK_CRT:BOOL=OFF \
+ -DVMAF:FILEPATH="VMAF-NOTFOUND" \
+ -DWARNINGS_AS_ERRORS:BOOL=OFF \
+ source
+%endif
+
 make %{?_smp_mflags}
 
 %install
@@ -112,6 +143,9 @@ rm %{buildroot}%{_libdir}/libx265.a
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Mon Mar 06 2023 Jingwiw  <wangjingwei@iscas.ac.cn> - 3.5-2
+- add riscv support
+
 * Thu May 26 2022 wulei <wulei80@h-partners.com> - 3.5-1
 - Update package
 
