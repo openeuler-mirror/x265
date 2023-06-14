@@ -1,0 +1,12 @@
+diff --git x265_3.5/source/CMakeLists.txt x265_3.5/source/CMakeLists.txt
+--- x265_3.5/source/CMakeLists.txt
++++ x265_3.5/source/CMakeLists.txt
+@@ -247,7 +247,7 @@ if(GCC)
+         message(STATUS "cross compile arm")
+     elseif(ARM)
+         if(ARM64)
+-            set(ARM_ARGS -fPIC)
++            set(ARM_ARGS -fPIC -no-integrated-as)
+             add_definitions(-DHAVE_NEON)
+         else()
+             find_package(Neon)
