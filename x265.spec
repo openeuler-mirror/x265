@@ -1,12 +1,14 @@
 Summary:          H.265/HEVC encoder
 Name:             x265
 Version:          3.5
-Release:          2
+Release:          3
 URL:              http://x265.org/
 License:          GPLv2
 
 Source0:          https://bitbucket.org/multicoreware/%{name}_git/get/%{version}.tar.gz
-
+%if "%toolchain" == "clang"
+Patch0:           fix-clang.patch
+%endif
 BuildRequires:    rpm-build cmake make gcc gcc-c++ gdb git
 
 %ifarch x86_64
@@ -25,7 +27,8 @@ Requires:         %{name}%{?_isa} = %{version}-%{release}
 x265 develop library.
 
 %prep
-%autosetup -n %{name}_%{version}
+%autosetup -n %{name}_%{version} -p1
+#%patch0 
 
 %build
 %ifarch aarch64
@@ -143,6 +146,9 @@ rm %{buildroot}%{_libdir}/libx265.a
 %{_libdir}/pkgconfig/x265.pc
 
 %changelog
+* Tue Jun 6 2023 zhangxiang <zhangxiang@iscas.ac.cn> - 3.5-3
+- Fix clang build error
+
 * Mon Mar 06 2023 Jingwiw  <wangjingwei@iscas.ac.cn> - 3.5-2
 - add riscv support
 
